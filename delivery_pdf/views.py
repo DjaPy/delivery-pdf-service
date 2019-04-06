@@ -8,10 +8,10 @@ async def index(request):
 
 class CreatePDF:
 
-    def __init__(self, server, servise):
+    def __init__(self, server, service):
         self.uuid_dict = {}
         self.server = server
-        self.service = servise
+        self.service = service
         self.add_uuid = None
 
     def get_uuid(self):
@@ -23,10 +23,12 @@ class CreatePDF:
         host_server = self.server['host']
         port_server = self.server['port']
 
-        url = 'http://{}:{}/convert'.format(host_service, port_service)
-        url_server = 'http://{}:{}/raw/{}'.format(host_server, port_server, uuid)
+        url = 'http://{0}:{1}/convert'.format(host_service, port_service)
+        url_server = 'http://{0}:{1}/raw/{2}'.format(host_server, port_server, uuid)
         params = {'auth': 'arachnys-weaver', 'url': url_server}
-        timeout = ClientTimeout(total=6*60, connect=2*60, sock_connect=60, sock_read=60)
+        timeout = ClientTimeout(
+            total=6*60, connect=2*60, sock_connect=60, sock_read=60
+        )
         async with ClientSession(timeout=timeout) as session:
             async with session.get(url=url, params=params) as resp:
                 content = await resp.content.read()

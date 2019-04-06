@@ -1,19 +1,34 @@
-from aiohttp import web
+import os
+from pathlib import Path
 
-from .settings import config_t
+from aiohttp import web
+from dotenv import load_dotenv
+
 from .routes import setup_routes
 from .views import CreatePDF
 
 
+env_path = Path('.') / '.env'
+print(env_path)
+load_dotenv(dotenv_path=env_path)
+
+
 async def init(argv=None):
     app = web.Application()
-    server = config_t['server']
-    service = config_t['service']
+    server = {
+        'host': os.getenv('SERVER_HOST'),
+        'port': os.getenv('SERVER_PORT')
+    }
+    service = {
+        'host': os.getenv('SERVICE_HOST'),
+        'port': os.getenv('SERVICE_PORT')
+    }
     handler = CreatePDF(server, service)
     setup_routes(app, handler)
-    app['config'] = config_t['external']
-    # host = config_t['external']['host']
-    # port = config_t['external']['port']
+    app['config'] = {
+        'host': os.getenv('SERVICE_HOST'),
+        'port': os.getenv('SERVER_PORT'),
+    }
 
     return app
 

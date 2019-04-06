@@ -9,7 +9,9 @@ REGEXP = re.compile(r"^__version__\W*=\W*'([\d.abrc]+)'")
 
 def read_version():
 
-    init_py = os.path.join(os.path.dirname(__file__), 'delivery_pdf', '__init__.py')
+    init_py = os.path.join(
+        os.path.dirname(__file__), 'delivery_pdf', '__init__.py'
+    )
 
     with open(init_py) as f:
         for line in f:
@@ -23,9 +25,9 @@ def read_version():
 
 install_requires = [
     'aiohttp==3.5.4',
+    'python-dotenv',
     'toml',
     'requests',
-    'pyyaml',
     'gunicorn',
 ]
 

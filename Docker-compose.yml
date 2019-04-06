@@ -4,15 +4,15 @@ services:
     build: .
     volumes:
       - ./:/app
-    command: gunicorn delivery_pdf.main:init -b :8500 --worker-class aiohttp.GunicornWebWorker --reload --access-logfile -
+    command: gunicorn delivery_pdf.main:init -b :${SERVER_PORT} --worker-class aiohttp.GunicornWebWorker --reload --access-logfile -
     ports:
-      - "8500:8500"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     networks:
       - host
   athena:
     image: arachnysdocker/athenapdf-service:latest
     ports:
-      - "8080:8080"
+      - "${SERVICE_PORT}:${SERVICE_PORT}"
     networks:
       - host
 networks:
