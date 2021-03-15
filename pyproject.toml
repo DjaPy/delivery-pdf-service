@@ -6,7 +6,7 @@ authors = ["Djapy <djapy@yandex.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-aiohttp = "^3.5"
+aiohttp = "^3.7"
 aiohttp_debugtoolbar = "^0.5.0"
 pyaml = "^18.11"
 toml = "^0.10.0"
